@@ -5,5 +5,17 @@ import CustomCursor from "../components/CustomCursor";
 ---
 
 <Layout title="GitHub Projects">
+    <div class="BackButton">
+        <a class="btn" href="/">Go Back</a>
+    </div>
+  <CustomCursor client:load />
   <GithubProjects />
 </Layout>
+
+<style>
+  .BackButton {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 0;
+  }
+</style>
