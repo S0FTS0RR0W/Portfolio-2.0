@@ -1,0 +1,42 @@
+---
+const skills = [
+  {name: 'HTML', pct: 95},
+  {name: 'CSS', pct: 92},
+  {name: 'JavaScript', pct: 62},
+  {name: 'TypeScript', pct: 70},
+  {name: 'React', pct: 52},
+  {name: 'Go', pct: 43}
+];
+---
+
+<section class="container">
+  <div style="margin-bottom: 3rem">
+    <h2>Wakatime Stats</h2>
+    <a href="/waka" class="btn">Check Out</a>
+  </div>
+  <h2>Skills</h2>
+  <div class="skills-grid">
+    {skills.map(s => (
+      <div class="skill" data-pct={s.pct}>
+        <strong>{s.name}</strong>
+        <div class="bar"><div class="fill" style="width:0"></div></div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script type="module">
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        const el = entry.target;
+        const pct = el.dataset.pct || 0;
+        const fill = el.querySelector('.fill');
+        requestAnimationFrame(()=> fill.style.width = pct + '%');
+        observer.unobserve(el);
+      }
+    });
+  }, {threshold: 0.25});
+
+  document.querySelectorAll('.skill').forEach(s => observer.observe(s));
+</script>

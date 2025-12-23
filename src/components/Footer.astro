@@ -1,0 +1,50 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <p>&copy; {year} Charlie Brown. All rights reserved.</p>
+      <div class="links">
+        <a href="https://github.com/S0FTS0RR0W" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://linkedin.com" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="https://twitter.com" target="_blank" rel="noreferrer">Twitter</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--border-color);
+    margin-top: 2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .links {
+    display: flex;
+    gap: 1.5rem;
+  }
+  .links a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .links a:hover {
+    color: var(--text-color);
+  }
+  @media (max-width: 640px) {
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>

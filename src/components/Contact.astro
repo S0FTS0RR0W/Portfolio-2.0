@@ -1,0 +1,24 @@
+---
+const email = 'charlie@s0fts0rr0w.com';
+---
+
+<section class="container">
+  <h2>Contact</h2>
+  <div class="contact">
+    <div>
+      <p class="email">{email}</p>
+      <p style="color:var(--muted)">I'm available for freelance and full-time roles.</p>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+      <button id="copyEmail" class="ghost">Copy Email</button>
+      <a class="btn" href={`mailto:${email}`}>Email Me</a>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  const btn = document.getElementById('copyEmail');
+  btn.addEventListener('click', async ()=>{
+    try{ await navigator.clipboard.writeText('charlie.brown@example.com'); btn.textContent = 'Copied!'; setTimeout(()=> btn.textContent = 'Copy Email',1500);}catch(e){btn.textContent='Copy failed'}
+  });
+</script>

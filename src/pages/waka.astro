@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+import WakaTimeStats from '../components/WakaTimeStats.astro';
+---
+
+<Layout title="Coding Stats | Charlie Brown">
+  <div class="container reveal">
+    <a href="/" class="ghost" style="margin-bottom: 2rem; display: inline-block; text-decoration: none;">&larr; return to /home/charlie</a>
+    <h1>My Coding Activity</h1>
+    <p style="color: var(--muted); margin-bottom: 2rem;">
+      Here's a breakdown of my coding activity over the last 7 days, powered by WakaTime.
+    </p>
+    <WakaTimeStats />
+  </div>
+</Layout>

@@ -1,0 +1,234 @@
+---
+---
+
+<div class="theme-menu-container">
+  <button id="theme-toggle" aria-label="Theme Menu" aria-haspopup="true" aria-expanded="false">
+    <!-- Sun Icon (Light) -->
+    <svg class="icon icon-light" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    <!-- Moon Icon (Dark) -->
+    <svg class="icon icon-dark" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    <!-- Monitor Icon (System) -->
+    <svg class="icon icon-system" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+  </button>
+
+  <div id="theme-dropdown" class="theme-dropdown hidden">
+    <button data-theme="light">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      Light
+    </button>
+    <button data-theme="dark">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      Dark
+    </button>
+    <button data-theme="system">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+      System
+    </button>
+  </div>
+</div>
+
+<style>
+  .theme-menu-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  #theme-toggle {
+    background: transparent;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #374151;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #theme-toggle:hover {
+    background-color: #f3f4f6;
+  }
+
+  .theme-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: 0.5rem;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    z-index: 50;
+    overflow: hidden;
+  }
+
+  .theme-dropdown.hidden {
+    display: none;
+  }
+
+  .theme-dropdown button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #374151;
+    font-size: 0.875rem;
+  }
+
+  .theme-dropdown button:hover {
+    background-color: #f3f4f6;
+  }
+
+  .icon {
+    display: none;
+  }
+
+  /* Icon Animations */
+  #theme-toggle:hover .icon-light {
+    animation: sun-spin 3s linear infinite;
+  }
+  #theme-toggle:hover .icon-dark {
+    animation: moon-wobble 1s ease-in-out infinite;
+  }
+  #theme-toggle:hover .icon-system {
+    animation: system-pulse 2s ease-in-out infinite;
+  }
+
+  .theme-dropdown button[data-theme="light"]:hover svg {
+    animation: sun-spin 3s linear infinite;
+  }
+  .theme-dropdown button[data-theme="dark"]:hover svg {
+    animation: moon-wobble 1s ease-in-out infinite;
+  }
+  .theme-dropdown button[data-theme="system"]:hover svg {
+    animation: system-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes sun-spin {
+    to { transform: rotate(360deg); }
+  }
+  @keyframes moon-wobble {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-20deg); }
+    75% { transform: rotate(20deg); }
+  }
+  @keyframes system-pulse {
+    50% { transform: scale(1.1); }
+  }
+
+  /* Dark mode styles */
+  :global(.dark) #theme-toggle {
+    border-color: #374151;
+    color: #e5e7eb;
+  }
+  :global(.dark) #theme-toggle:hover {
+    background-color: #374151;
+  }
+  :global(.dark) .theme-dropdown {
+    background-color: #1f2937;
+    border-color: #374151;
+  }
+  :global(.dark) .theme-dropdown button {
+    color: #e5e7eb;
+  }
+  :global(.dark) .theme-dropdown button:hover {
+    background-color: #374151;
+  }
+</style>
+
+<script>
+  function setupThemeMenu() {
+    const toggle = document.getElementById('theme-toggle');
+    const dropdown = document.getElementById('theme-dropdown');
+    const buttons = dropdown?.querySelectorAll('button');
+    const icons = {
+      light: document.querySelector('.icon-light'),
+      dark: document.querySelector('.icon-dark'),
+      system: document.querySelector('.icon-system'),
+    };
+
+    if (!toggle || !dropdown) return;
+
+    // Toggle dropdown
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!isExpanded));
+      dropdown.classList.toggle('hidden');
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.add('hidden');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Update Icon
+    const updateIcon = (theme) => {
+      Object.values(icons).forEach(icon => {
+        if (icon) icon.style.display = 'none';
+      });
+      
+      if (icons[theme]) {
+        icons[theme].style.display = 'block';
+      } else {
+        if (icons.system) icons.system.style.display = 'block';
+      }
+    };
+
+    // Set theme
+    const setTheme = (theme) => {
+      localStorage.setItem('theme', theme);
+      
+      let isDark;
+      if (theme === 'system') {
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      } else {
+        isDark = theme === 'dark';
+      }
+      document.documentElement.classList.toggle('dark', isDark);
+      document.documentElement.classList.toggle('light', !isDark);
+      
+      updateIcon(theme);
+      dropdown.classList.add('hidden');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    // Event listeners for options
+    buttons?.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const theme = btn.getAttribute('data-theme');
+        if (theme) setTheme(theme);
+      });
+    });
+
+    // Initialize
+    const savedTheme = localStorage.getItem('theme') || 'system';
+    updateIcon(savedTheme);
+    setTheme(savedTheme);
+
+    // Listen for system changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (localStorage.getItem('theme') === 'system') {
+        const isDark = e.matches;
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.classList.toggle('light', !isDark);
+      }
+    });
+  }
+
+  // Run immediately
+  setupThemeMenu();
+
+  // Re-run on view transitions
+  document.addEventListener('astro:after-swap', setupThemeMenu);
+</script>

@@ -1,0 +1,63 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+import '../assets/styles.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = "Charlie Brown | Frontend Developer", description = "Charlie Brown's Portfolio" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<title>{title}</title>
+		<ViewTransitions />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<div class="spotlight"></div>
+		<slot />
+		<script>
+			// Mouse Spotlight Effect
+			document.addEventListener('mousemove', (e) => {
+				const spotlight = document.querySelector('.spotlight') as HTMLElement;
+				if (spotlight) {
+					spotlight.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(124, 58, 237, 0.15), transparent 40%)`;
+				}
+			});
+
+			// Scroll Reveal Animation
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('visible');
+					}
+				});
+			}, { threshold: 0.1 });
+
+			document.addEventListener('astro:page-load', () => {
+				document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+			});
+		</script>
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		font-family: 'Outfit', sans-serif;
+	}
+</style>

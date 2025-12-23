@@ -1,0 +1,56 @@
+---
+interface Props {
+  cvPath?: string;
+  downloadFilename?: string;
+  buttonText?: string;
+}
+
+const {
+  cvPath = './src/assets/CV.pdf',
+  downloadFilename = 'Charlie Brown CV.pdf',
+  buttonText = 'Download CV'
+} = Astro.props;
+---
+
+<a href={cvPath} download={downloadFilename} class="cv-download-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="download-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+  <span>{buttonText}</span>
+</a>
+
+<style>
+.cv-download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #374151;
+  color: #e5e7eb;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.cv-download-button:hover {
+  background-color: #4b5563;
+}
+
+.cv-download-button:hover .download-icon polyline,
+.cv-download-button:hover .download-icon line {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(3px); }
+}
+
+:global(.dark) .cv-download-button {
+    background-color: #e5e7eb;
+    color: #1f2937;
+}
+
+:global(.dark) .cv-download-button:hover {
+    background-color: #d1d5db;
+}
+</style>

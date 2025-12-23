@@ -1,0 +1,63 @@
+---
+interface Props {
+  limit?: number;
+}
+
+const { limit = 6 } = Astro.props;
+const apiKey = import.meta.env.WAKATIME_API_KEY;
+
+let languages = [];
+let bestDay = null;
+let dailyAverage = '';
+
+if (apiKey) {
+  try {
+    const response = await fetch(`https://wakatime.com/api/v1/users/current/stats/last_7_days?api_key=${apiKey}`);
+    const data = await response.json();
+    if (data?.data) {
+      languages = data.data.languages?.slice(0, limit) || [];
+      bestDay = data.data.best_day;
+      dailyAverage = data.data.human_readable_daily_average;
+    }
+  } catch (e) {
+    console.error("WakaTime fetch failed:", e);
+  }
+}
+---
+
+{languages.length > 0 && (
+  <div class="skills-grid">
+    {languages.map((lang: any) => (
+      <div class="skill">
+        <div class="skill-header">
+          <span>{lang.name}</span>
+          <span class="skill-time">{lang.text}</span>
+        </div>
+        <div class="bar">
+          <div class="fill" style={`width: ${lang.percent}%`}></div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="activeTimes" style="margin-top: 2rem;">
+    <h2 style="font-size: 1.2rem; margin-bottom: 1rem;">Activity Overview</h2>
+    <div class="skills-grid">
+      <div class="skill">
+        <div class="skill-header">
+          <span>Daily Average</span>
+        </div>
+        <p style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0 0; color: var(--accent);">{dailyAverage}</p>
+      </div>
+      {bestDay && (
+        <div class="skill">
+          <div class="skill-header">
+            <span>Best Day</span>
+            <span class="skill-time">{bestDay.date}</span>
+          </div>
+          <p style="font-size: 1.5rem; font-weight: 700; margin: 0.5rem 0 0 0; color: var(--accent);">{bestDay.text}</p>
+        </div>
+      )}
+    </div>
+  </div>
+)}

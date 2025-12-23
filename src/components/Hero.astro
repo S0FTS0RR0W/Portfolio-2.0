@@ -1,0 +1,42 @@
+---
+import ThemeToggle from './ThemeToggle.astro';
+---
+
+<section class="hero container">
+  <div class="left">
+    <p class="eyebrow">Hi, I'm</p>
+    <h1>Charlie Brown <span class="role">— Frontend Developer</span></h1>
+    <p id="typed">I build fast, accessible web interfaces.</p>
+
+    <div class="profile-card">
+      
+    </div>
+
+    <div class="cta-row">
+      <a class="btn" href="#projects">See projects</a>
+      <a class="ghost" href="mailto:charlie@s0fts0rr0w.com">Get in touch</a>
+    </div>
+  </div>
+  <div class="right">
+    <ThemeToggle />
+  </div>
+</section>
+
+<script type="module">
+  // Lightweight typing effect
+  const el = document.getElementById('typed');
+  if (el) {
+    const phrases = ['I build interactive UIs.', 'React • Astro • TypeScript', 'Accessible, performant frontends.'];
+    let i = 0, j = 0, forward = true;
+    const tick = () => {
+      const current = phrases[i];
+      el.textContent = current.slice(0, j);
+      if (forward) j++;
+      else j--;
+      if (j > current.length) { forward = false; setTimeout(tick, 900); return; }
+      if (j < 0) { forward = true; i = (i+1)%phrases.length; j = 0; }
+      setTimeout(tick, forward ? 60 : 24);
+    };
+    tick();
+  }
+</script>

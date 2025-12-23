@@ -1,0 +1,67 @@
+---
+const projects = [
+  { id: 'p1', title: 'Portfolio Redesign', desc: 'Modern portfolio built with Astro and TypeScript.', tags: ['astro','design'], live: '#', repo: '#' },
+  { id: 'p2', title: 'UI Component Library', desc: 'Reusable component library with accessible patterns.', tags: ['react','components'], live: '#', repo: '#' },
+  { id: 'p3', title: 'E-commerce SPA', desc: 'High-performance shop with optimized animations.', tags: ['react','performance'], live: '#', repo: '#' }
+];
+const tags = Array.from(new Set(projects.flatMap(p=>p.tags)));
+---
+
+<section id="projects" class="container">
+  <h2>Selected Projects</h2>
+  <div class="filters" role="tablist" aria-label="Project filters">
+    <button class="filter active" data-filter="all">All</button>
+    {tags.map(t => <button class="filter" data-filter={t}>{t}</button>)}
+  </div>
+
+  <div class="projects-grid">
+    {projects.map(p => (
+      <article class="project-card" data-tags={p.tags.join(' ')} data-id={p.id} tabindex="0">
+        <h3>{p.title}</h3>
+        <p style="color:var(--muted);margin:6px 0">{p.desc}</p>
+        <div class="tags">{p.tags.map(t => <span class="tag">{t}</span>)}</div>
+      </article>
+    ))}
+  </div>
+
+  <!-- Modal -->
+  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true">
+      <button id="modalClose" class="ghost" style="float:right">Close</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+</section>
+
+<script type="module">
+  const filters = document.querySelectorAll('.filter');
+  const cards = document.querySelectorAll('.project-card');
+  const modal = document.getElementById('modalBackdrop');
+  const modalContent = document.getElementById('modalContent');
+  const modalClose = document.getElementById('modalClose');
+
+  function setFilter(tag){
+    filters.forEach(f => f.classList.toggle('active', f.dataset.filter === tag));
+    cards.forEach(c => {
+      if(tag === 'all') c.style.display = '';
+      else {
+        const tags = c.dataset.tags.split(' ');
+        c.style.display = tags.includes(tag) ? '' : 'none';
+      }
+    });
+  }
+
+  filters.forEach(f => f.addEventListener('click', ()=> setFilter(f.dataset.filter)));
+
+  cards.forEach(card => card.addEventListener('click', ()=> {
+    const id = card.dataset.id;
+    const project = projects.find(p => p.id === id);
+    if(!project) return;
+    modalContent.innerHTML = `<h3>${project.title}</h3><p style="color:var(--muted)">${project.desc}</p><p class=\"tags\">${project.tags.map(t=>`<span class=\"tag\">${t}</span>`).join(' ')}</p><p style=\"margin-top:12px\"><a class=\"btn\" href=\"${project.live}\">View live</a> <a class=\"ghost\" href=\"${project.repo}\">Repo</a></p>`;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }));
+
+  modalClose.addEventListener('click', ()=>{ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); });
+  modal.addEventListener('click', (e)=>{ if(e.target === modal) { modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); } });
+</script>

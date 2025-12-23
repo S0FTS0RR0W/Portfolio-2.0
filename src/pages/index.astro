@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Projects from '../components/Projects.astro';
+import Skills from '../components/Skills.astro';
+import Contact from '../components/Contact.astro';
+import CustomCursor from '../components/CustomCursor';
+import Footer from '../components/Footer.astro';
+import Cv from '../components/cv.astro';
+---
+
+<Layout>
+	<meta name="google-site-verification" content="UukOB9OxLv7XN19WLBtV120Qqm4dFmTaOt_RwgwtfrA" slot="head" />
+	<CustomCursor client:load />
+	<main class="page-grid">
+		<div class="reveal"><Hero /></div>
+		<div class="reveal" style="display: flex; justify-content: center; padding: 4rem 0;">
+			<Cv buttonText="Download my CV here" />
+		</div>
+		<div class="reveal"><Projects /></div>
+		<div class="reveal"><Skills /></div>
+		<div class="reveal"><Contact /></div>
+	</main>
+	<Footer />
+</Layout>
