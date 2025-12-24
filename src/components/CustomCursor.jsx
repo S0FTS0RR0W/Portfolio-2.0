@@ -4,54 +4,52 @@ export default function CustomCursor() {
   const cursorRef = useRef(null);
 
   useEffect(() => {
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
     const style = document.createElement("style");
     style.innerHTML = "* { cursor: none !important; }";
     document.head.appendChild(style);
 
+    let isHovering = false;
+
     const move = (e) => {
-      if (cursorRef.current) {
-        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      if (!isHovering) {
+        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+        cursor.style.transition = "opacity 0.15s ease-out, transform 0s";
       }
     };
 
-    // remove cursor when hovering on buttons
-    const handleMouseEnter = (e) => {
-      if (e.target.tagName === "BUTTON" || e.target.closest("button")) {
-        cursorRef.current.style.display = "none";
+    const handleMouseOver = (e) => {
+      const button = e.target.closest("button");
+      const link = e.target.closest("a");
+      const target = button || link;
+
+      if (target) {
+        isHovering = true;
+        cursor.style.opacity = 0;
+        cursor.style.transition = "opacity 0.15s ease-out";
       }
     };
 
-    const handleMouseLeave = (e) => {
-      if (e.target.tagName === "BUTTON" || e.target.closest("button")) {
-        cursorRef.current.style.display = "block";
+    const handleMouseOut = (e) => {
+      const target = e.target.closest("button") || e.target.closest("a");
+      if (target && !target.contains(e.relatedTarget)) {
+        isHovering = false;
+        cursor.style.opacity = 1;
+        cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
       }
     };
-
-    document.addEventListener("mouseenter", handleMouseEnter, true);
-    document.addEventListener("mouseleave", handleMouseLeave, true);
-    
-
-    //make cursor snap to button
-    const handleButtonHover = (e) => {
-      if (e.target.tagName === "BUTTON" || e.target.closest("button")) {
-        const buttonRect = e.target.getBoundingClientRect();
-        const buttonCenterX = buttonRect.left + buttonRect.width / 2;
-        const buttonCenterY = buttonRect.top + buttonRect.height / 2;
-        cursorRef.current.style.transform = `translate(${buttonCenterX}px, ${buttonCenterY}px) scale(3)`;
-        cursorRef.current.style.transition = "transform 0.2s ease-out";
-      } else {
-        cursorRef.current.style.transition = "none";
-        cursorRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) scale(1)`;
-      }
-    };
-
-    document.addEventListener("mouseover", handleButtonHover);
-    
 
     window.addEventListener("mousemove", move);
+    document.addEventListener("mouseover", handleMouseOver);
+    document.addEventListener("mouseout", handleMouseOut);
+
     return () => {
       window.removeEventListener("mousemove", move);
-      document.head.removeChild(style);
+      document.removeEventListener("mouseover", handleMouseOver);
+      document.removeEventListener("mouseout", handleMouseOut);
+      if (style.parentNode) document.head.removeChild(style);
     };
   }, []);
 
