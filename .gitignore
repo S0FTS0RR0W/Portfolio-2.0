@@ -21,3 +21,6 @@ pnpm-debug.log*
 
 # environment variables
 .env
+
+yarn.lock
+yarn.lock.nf
