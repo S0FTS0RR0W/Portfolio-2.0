@@ -33,7 +33,7 @@ const tags = Array.from(new Set(projects.flatMap(p=>p.tags)));
   </div>
 </section>
 
-<script type="module">
+<script define:vars={{ projects }} type="module">
   const filters = document.querySelectorAll('.filter');
   const cards = document.querySelectorAll('.project-card');
   const modal = document.getElementById('modalBackdrop');
@@ -43,10 +43,20 @@ const tags = Array.from(new Set(projects.flatMap(p=>p.tags)));
   function setFilter(tag){
     filters.forEach(f => f.classList.toggle('active', f.dataset.filter === tag));
     cards.forEach(c => {
-      if(tag === 'all') c.style.display = '';
-      else {
-        const tags = c.dataset.tags.split(' ');
-        c.style.display = tags.includes(tag) ? '' : 'none';
+      const tags = c.dataset.tags.split(' ');
+      const shouldShow = tag === 'all' || tags.includes(tag);
+
+      if (shouldShow) {
+        c.style.display = '';
+        void c.offsetWidth; // Force reflow
+        c.style.opacity = '1';
+        c.style.transform = '';
+      } else {
+        c.style.opacity = '0';
+        c.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          if (c.style.opacity === '0') c.style.display = 'none';
+        }, 300);
       }
     });
   }
@@ -65,3 +75,31 @@ const tags = Array.from(new Set(projects.flatMap(p=>p.tags)));
   modalClose.addEventListener('click', ()=>{ modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); });
   modal.addEventListener('click', (e)=>{ if(e.target === modal) { modal.classList.remove('show'); modal.setAttribute('aria-hidden','true'); } });
 </script>
+
+<style>
+  .project-card {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 1;
+  }
+
+  .filter:hover,
+  .project-card:hover {
+    transform: translateY(-2px);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .filter:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+  }
+
+  .modal-backdrop {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .modal-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+  }
+</style>
