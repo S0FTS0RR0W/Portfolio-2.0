@@ -25,18 +25,23 @@ const skills = [
   </div>
 </section>
 
-<script type="module">
-  const observer = new IntersectionObserver((entries)=>{
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        const el = entry.target;
-        const pct = el.dataset.pct || 0;
-        const fill = el.querySelector('.fill');
-        requestAnimationFrame(()=> fill.style.width = pct + '%');
-        observer.unobserve(el);
-      }
-    });
-  }, {threshold: 0.25});
+<script>
+  const initSkills = () => {
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const el = entry.target;
+          const pct = el.dataset.pct || 0;
+          const fill = el.querySelector('.fill');
+          requestAnimationFrame(()=> fill.style.width = pct + '%');
+          observer.unobserve(el);
+        }
+      });
+    }, {threshold: 0.25});
 
-  document.querySelectorAll('.skill').forEach(s => observer.observe(s));
+    document.querySelectorAll('.skill').forEach(s => observer.observe(s));
+  };
+
+  initSkills();
+  document.addEventListener('astro:after-swap', initSkills);
 </script>
