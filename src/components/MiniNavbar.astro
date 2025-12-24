@@ -1,0 +1,49 @@
+---
+const links = [
+  { name: 'Home', href: '/' },
+  { name: 'Work', href: '/github' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
+];
+---
+
+<nav class="mini-navbar" aria-label="Footer Navigation">
+  <ul>
+    {links.map((link) => (
+      <li>
+        <a href={link.href}>{link.name}</a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .mini-navbar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mini-navbar a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .mini-navbar a:hover {
+    color: #111827;
+  }
+
+  :global(.dark) .mini-navbar a {
+    color: #9ca3af;
+  }
+
+  :global(.dark) .mini-navbar a:hover {
+    color: #f3f4f6;
+  }
+</style>

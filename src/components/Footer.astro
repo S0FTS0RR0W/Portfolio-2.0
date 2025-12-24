@@ -1,10 +1,12 @@
 ---
+import MiniNavbar from './MiniNavbar.astro';
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
   <div class="container">
     <div class="footer-inner">
+      <MiniNavbar />
       <p>&copy; {year} Charlie Brown. All rights reserved.</p>
       <div class="links">
         <a href="https://github.com/S0FTS0RR0W" target="_blank" rel="noreferrer">GitHub</a>

@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import CustomCursor from "../components/CustomCursor";
+import ContactPage from "../components/ContactPage.astro";
+---
+
+<Layout title="contact">
+    <div class="BackButton">
+        <a class="btn" href="/">Go Back</a>
+    </div>
+  <CustomCursor client:load />
+  <ContactPage />
+</Layout>
