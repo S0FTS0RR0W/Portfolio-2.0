@@ -1,9 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import WakaTimeStats from '../components/WakaTimeStats.astro';
+import CustomCursor from '../components/CustomCursor';
 ---
 
 <Layout title="Coding Stats | Charlie Brown">
+  <CustomCursor client:load />
   <div class="container reveal">
     <a href="/" class="ghost" style="margin-bottom: 2rem; display: inline-block; text-decoration: none;">&larr; return to /home/charlie</a>
     <h1>My Coding Activity</h1>
